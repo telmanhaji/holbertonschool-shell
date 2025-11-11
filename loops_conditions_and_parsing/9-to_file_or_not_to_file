@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# This script checks if the file "school" exists and what it is.
+
+# 1. The first big question: Does "school" even exist?
+if [ -e "school" ]; then
+  # --- BEGIN 'THEN' BLOCK (It DOES exist) ---
+
+  # 1a. OK, it exists. Print this first.
+  echo "school file exists"
+
+  # 1b. Now, let's ask a new question: Does it have any content?
+  if [ -s "school" ]; then
+    echo "school file is not empty"
+  else
+    echo "school file is empty"
+  fi
+
+  # 1c. Last question: Is it a regular file (and not a directory)?
+  if [ -f "school" ]; then
+    echo "school is a regular file"
+  fi
+  
+  # --- END 'THEN' BLOCK ---
+
+else
+  # --- BEGIN 'ELSE' BLOCK (It does NOT exist) ---
+  
+  # 2. It doesn't exist. Print this and we are done.
+  echo "school file does not exist"
+
+fi
