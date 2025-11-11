@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# This is script for task 4. "4. 4 bad luck, 8 is your chance". It uses while loops 1-10, prints a special message for 4 and 8.
+i=1 # Initialize the counter
+
+# Starting the loop, which runs as long as $i  <= 10
+while [ "$i" -le 10 ]; do
+
+	# Checking for the 4th iteration
+	if [ "$i" -eq 4 ]; then
+		echo "bad luck"
+
+	# Checking for the 8th iteration
+	elif [ "$i" -eq 8 ]; then
+		echo "good luck"
+
+	# Handle all other iteractions
+	else
+		echo "Best School"
+	fi
+
+	# Increment the counter for the next loop
+	((i++))
+
+	done
