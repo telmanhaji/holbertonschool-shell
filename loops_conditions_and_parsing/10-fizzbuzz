@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# This script that displays numbers from 1 to 100 with next requierements:
+# 1. Displays FizzBuzz when the number is a multiple of 3 and 5;
+# 2. Displays Fizz when the number is multiple of 3;
+# 3. Displays Buzz when the number is a multiple of 5;
+# 4. Otherwise, displays the number;
+# 5. In a list format;
+
+# start a loop that counts from 1 to 100
+for i in {1..100}
+do
+	# check for the most specific condition 1st (multiple of 3 AND 5)
+	# user [[ ... && ... ]] to mean "AND"
+	if [[ $(( i % 3 )) -eq 0 && $(( i % 5 )) -eq 0 ]]; then
+		echo "FizzBuzz"
+
+	# if not, check for just multiple of 3
+	elif [[ $(( i % 3 )) -eq 0 ]]; then
+		echo "Fizz"
+
+	# if not check for just multiple of 5
+	elif [[ $(( i % 5 )) -eq 0 ]]; then
+		echo "Buzz"
+	# if it is none of the above, just print the number
+	else
+		echo "$i"
+	fi
+done
