@@ -14,3 +14,6 @@
 13. 12-combinations - script that prints all possible combinations of two letters, except oo
 14. 13-print_float - script that prints a number with two decimal places, followed by a new line
 15. 14-decimal_to_hexadecimal - script that converts a number from base 10 to base 16.
+16. 15-rot13 - script that encodes and decodes text using the rot13 encryption. ASCII.
+17. 16-odd - script that prints every other line from the input, starting with the first line.
+18. 17-water_and_stir -  script that adds the two numbers stored in the environment variables WATER and STIR and prints the result.
