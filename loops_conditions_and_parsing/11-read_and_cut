@@ -3,7 +3,7 @@
 
 # Readng  the /etc/passwd file line by line
 # Set the Internal Field Separator (IFS) to ':' to chop the line correctly
-while IFS=':' read -r username password uid gid info home shell
+while IFS=':' read -r username uid home
 do
   # Print only the 1st, 3rd, and 6th fields, separated by a colon
   echo "$username:$uid:$home"
