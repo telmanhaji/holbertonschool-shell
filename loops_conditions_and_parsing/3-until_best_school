@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This This script displays "Best School" 10 times using a until
+
+i=0 # 1. INITIALIZE
+
+until [ $i -eq 10 ]; do # 2. CHECK (run until this is true)
+	echo "Best School"
+	i=$((i+1)) # 3. INCREMENT
+done
+
