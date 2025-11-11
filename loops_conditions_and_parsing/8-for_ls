@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# This script displays content for the current directory in list format, where only part of the name after first dash is displayed
+
+# loop over every file in the current directory that contains a dash
+# 'file' will hold the filename, 1 by 1
+for file in *-*
+do
+	# 1. echo the filename
+	# 2. pipe (|) the filename as input to the 'cut'
+	# 3. cut the text using '-' as the delimeter (-d)
+	# 4. print the 2nd field and all following fields (-f 2-)
+	echo "$file" | cut -d '-' -f 2-
+done
