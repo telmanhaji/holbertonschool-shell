@@ -3,11 +3,15 @@
 
 # loop over every file in the current directory that contains a dash
 # 'file' will hold the filename, 1 by 1
-for file in *-*
+for file in *
 do
-	# 1. echo the filename
-	# 2. pipe (|) the filename as input to the 'cut'
-	# 3. cut the text using '-' as the delimeter (-d)
-	# 4. print the 2nd field and all following fields (-f 2-)
-	echo "$file" | cut -d '-' -f 2-
+	# check if the filename contains a dash, then use wildcard
+	if [[ "$file" == *-* ]]; then
+	
+		# if yes: the file has a dash. pipe to 'cut'
+		echo "$file" | cut -d '-' -f 2-
+	else
+		# if no: the file does not have a dash, then print whole name.
+		echo "$file"
+	fi
 done
