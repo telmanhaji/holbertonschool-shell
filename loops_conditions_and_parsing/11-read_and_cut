@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# This script reads /etc/passwd and prints the username, UID, and home directory.
+
+# Readng  the /etc/passwd file line by line
+# Set the Internal Field Separator (IFS) to ':' to chop the line correctly
+while IFS=':' read -r username password uid gid info home shell
+do
+  # Print only the 1st, 3rd, and 6th fields, separated by a colon
+  echo "$username:$uid:$home"
+
+done < /etc/passwd
