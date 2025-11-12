@@ -3,7 +3,7 @@
 while true
 do
 	# printing message to the screen
-	echo "to infinity and beyond"
+	echo "To infinity and beyond"
 	# pause script for 2 seconds each iteration
 	sleep 2
 done
