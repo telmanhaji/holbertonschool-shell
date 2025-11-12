@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This is 67-stop_me_if_you_can, the "attacker" script.
+
+# It finds any process with "7-highlander" in its name
+# and sends a SIGTERM signal to it.
+pkill -f 7-highlander

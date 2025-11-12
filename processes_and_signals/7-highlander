@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This is 7-highlander, a script that traps SIGTERM.
+
+# 1. SET THE TRAP:
+# This tells the script: "When you receive a SIGTERM signal,
+# run the 'echo' command instead of dying."
+trap 'echo "I am invincible!!!"' SIGTERM
+
+# 2. THE INFINITE LOOP:
+# This part is the same as your '4-to_infinity_and_beyond' script.
+while true
+do
+  echo "To infinity and beyond"
+  sleep 2
+done
