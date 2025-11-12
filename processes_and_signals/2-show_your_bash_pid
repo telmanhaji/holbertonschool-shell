@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This script finds all running "bash" processes.
+# shellcheck disable=SC2009
+
+# A. 'ps auxf' runs and generates the full process list.
+# B. The '|' (pipe) sends that list to the 'grep' command.
+# C. 'grep bash' filters the list and prints only the lines
+#    containing "bash".
+ps auxf | grep bash
