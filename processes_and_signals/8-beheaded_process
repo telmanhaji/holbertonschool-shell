@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This script "beheads" the 7-highlander process using SIGKILL.
+
+# 'pkill' finds the process by its name.
+# '-f' searches the full command line.
+# '-9' (or -SIGKILL) sends the "unblockable" kill signal
+# that cannot be trapped.
+pkill -f -9 7-highlander
