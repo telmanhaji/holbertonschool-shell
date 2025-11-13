@@ -11,16 +11,10 @@ pid_file="/var/run/myscript.pid"
 # PID file
 echo $$ > "$pid_file"
 
-# Cleanup function
-cleanup() {
-	rm-f "$pid_file"
-	exit 0
-}
-
-# Applyinh traps
-trap 'echo "I hate the kill comand"; cleanup' SIGTERM
+# Applying traps
+trap 'echo "I hate the kill comand"; rm-f "$pid_file"; exit 0' SIGTERM
 trap 'echo "Y U no love me?!"' SIGINT
-trap 'cleanup' SIGQUIT
+trap 'rm -f "$pid_file"; exit 0' SIGQUIT
 
 #Infinite loop
 while true; do
