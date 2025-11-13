@@ -17,34 +17,35 @@
 # Displays manage_my_process restarted
 # Displays Usage: manage_my_process {start|stop|restart} if any other argument or no argument is passed
 
-# Path to PID file.
+# Path to the PID file.
+# We use /var/run because the task example shows 'sudo',
+# meaning we have root privileges to write here.
 PID_FILE="/var/run/my_process.pid"
 
-# Path to the script.
-# Suppose that script in the same directory.
+# Path to the worker script
+# This assumes it is in the same directory
 PROCESS_SCRIPT="./manage_my_process"
 
-
-# Checks new argument ($1)
+# Check the first argument ($1) passed to the script
 case "$1" in
   start)
-    # --- START¢ --
-    # Runs daemon in background
+    # --- START ---
+    # Start the process in the background (&)
     "$PROCESS_SCRIPT" &
     
-    # Save the file exact after run PID ($!) Ð² .pid file
+    # Get the PID of the just-launched process ($!) and save it
     echo $! > "$PID_FILE"
     echo "manage_my_process started"
     ;;
 
   stop)
     # --- STOP ---
-    # Is .pid file exist?
+    # Check if the PID file exists
     if [ -f "$PID_FILE" ]; then
-      # Read PID from the file and send it to kill command
-      kill "$(cat "$PID_FILE")"
+      # Read the PID from the file and pass it to 'kill'
+      kill $(cat "$PID_FILE")
       
-      # Deleting.pid file
+      # Remove the PID file
       rm -f "$PID_FILE"
       echo "manage_my_process stopped"
     else
@@ -53,26 +54,28 @@ case "$1" in
     ;;
 
   restart)
-    # --- Restart ---
-    # It is just 'stop'and 'start'.
+    # --- RESTART ---
+    # This is a combination of stop and start
     
-    # First stop (if it runs)
+    # 1. Stop the process (if it's running)
     if [ -f "$PID_FILE" ]; then
-      kill "$(cat "$PID_FILE")"
+      kill $(cat "$PID_FILE")
       rm -f "$PID_FILE"
     fi
     
-    # Then restart it again
+    # 2. Start the process again
     "$PROCESS_SCRIPT" &
     echo $! > "$PID_FILE"
     echo "manage_my_process restarted"
     ;;
 
   *)
-    # --- WRONG ARGUMENT ---
-    # If $1 doesnt "start", "stop" or "restart",
-    # Display message about usage.
+    # --- DEFAULT (Invalid argument) ---
+    # If $1 is not 'start', 'stop', or 'restart'
+    # Show the usage message and exit with an error
     echo "Usage: $0 {start|stop|restart}"
-    exit 1 # Exit with error code
+    exit 1
     ;;
 esac
+
+exit 0
