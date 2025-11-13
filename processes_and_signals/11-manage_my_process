@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+# This is script "11-manage_my_process", that manages manage_my_process
+# Requirements:
+# When passing the argument start:
+# Starts manage_my_process
+# Creates a file containing its PID in /var/run/my_process.pid
+# Displays manage_my_process started
+# When passing the argument stop:
+# Stops manage_my_process
+# Deletes the file /var/run/my_process.pid
+# Displays manage_my_process stopped
+# When passing the argument restart
+# Stops manage_my_process
+# Deletes the file /var/run/my_process.pid
+# Starts manage_my_process
+# Creates a file containing its PID in /var/run/my_process.pid
+# Displays manage_my_process restarted
+# Displays Usage: manage_my_process {start|stop|restart} if any other argument or no argument is passed
+
+# Path to PID file.
+PID_FILE="/var/run/my_process.pid"
+
+# Path to the script.
+# Suppose that script in the same directory.
+PROCESS_SCRIPT="./manage_my_process"
+
+
+# Checks new argument ($1)
+case "$1" in
+  start)
+    # --- START¢ --
+    # Runs daemon in background
+    "$PROCESS_SCRIPT" &
+    
+    # Save the file exact after run PID ($!) Ð² .pid file
+    echo $! > "$PID_FILE"
+    echo "manage_my_process started"
+    ;;
+
+  stop)
+    # --- STOP ---
+    # Is .pid file exist?
+    if [ -f "$PID_FILE" ]; then
+      # Read PID from the file and send it to kill command
+      kill "$(cat "$PID_FILE")"
+      
+      # Deleting.pid file
+      rm -f "$PID_FILE"
+      echo "manage_my_process stopped"
+    else
+      echo "manage_my_process is not running (PID file not found)."
+    fi
+    ;;
+
+  restart)
+    # --- Restart ---
+    # It is just 'stop'and 'start'.
+    
+    # First stop (if it runs)
+    if [ -f "$PID_FILE" ]; then
+      kill "$(cat "$PID_FILE")"
+      rm -f "$PID_FILE"
+    fi
+    
+    # Then restart it again
+    "$PROCESS_SCRIPT" &
+    echo $! > "$PID_FILE"
+    echo "manage_my_process restarted"
+    ;;
+
+  *)
+    # --- WRONG ARGUMENT ---
+    # If $1 doesnt "start", "stop" or "restart",
+    # Display message about usage.
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1 # Exit with error code
+    ;;
+esac

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This is daemon. It runs in background.
+
+while true
+do
+  # >> append to the file, not overwrite
+  echo "I am alive!" >> /tmp/my_process
+  sleep 2
+done
