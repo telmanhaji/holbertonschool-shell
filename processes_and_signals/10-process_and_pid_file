@@ -1,23 +1,36 @@
 #!/usr/bin/env bash
-#This script for below operations:
-# Creates the file /var/run/myscript.pid containing its PID
-# Displays To infinity and beyond indefinitely
-# Displays I hate the kill command when receiving a SIGTERM signal
-# Displays Y U no love me?! when receiving a SIGINT signal
-# Deletes the file /var/run/myscript.pid and terminates itself when receiving a SIGQUIT or SIGTERM signal
+# This script runs a daemon, creates a PID file, and traps signals.
 
-pid_file="/var/run/myscript.pid"
+#  Define the path for our PID file
+PID_FILE="/var/run/myscript.pid"
 
-# PID file
-echo $$ > "$pid_file"
+#  Define a cleanup function to be called on exit
+cleanup() {
+  #  Remove the PID file when the script stops
+  rm -f "$PID_FILE"
+  #  Exit the script successfully
+  exit 0
+}
 
-# Applying traps
-trap 'echo "I hate the kill comand"; rm-f "$pid_file"; exit 0' SIGTERM
-trap 'echo "Y U no love me?!"' SIGINT
-trap 'rm -f "$pid_file"; exit 0' SIGQUIT
+#  Set the traps
+#  1. SIGINT (Ctrl+C): Just display a message and continue
+trap 'echo " Y U no love me?!"' SIGINT
 
-#Infinite loop
-while true; do
-	echo "To infinity and beyond"
-	sleep 2
+#  2. SIGTERM (pkill): Display a message, then call cleanup
+trap 'echo " I hate the kill command"; cleanup' SIGTERM
+
+#  3. SIGQUIT: Just call cleanup
+trap 'cleanup' SIGQUIT
+
+#  --- Main Script Starts Here ---
+
+#  1. Create the PID file and write our own PID ($$) into it.
+#     This needs 'sudo' to work.
+echo "$$" > "$PID_FILE"
+
+#  2. Start the infinite loop
+while true
+do
+  echo "To infinity and beyond"
+  sleep 2
 done
