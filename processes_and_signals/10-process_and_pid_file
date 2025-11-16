@@ -1,36 +1,29 @@
 #!/usr/bin/env bash
-# This script runs a daemon, creates a PID file, and traps signals.
+# This script writes its PID to a file, handles signals, and prints messages
 
-#  Define the path for our PID file
-PID_FILE="/var/run/myscript.pid"
+PID_FILE="/tmp/myscript.pid"
 
-#  Define a cleanup function to be called on exit
-cleanup() {
-  #  Remove the PID file when the script stops
-  rm -f "$PID_FILE"
-  #  Exit the script successfully
-  exit 0
+# Write PID immediately
+echo $$ > "$PID_FILE"
+
+# Handle SIGTERM
+sigterm_message() {
+    echo "I hate the kill command"
+    rm -f "$PID_FILE"
+    exit 0
 }
 
-#  Set the traps
-#  1. SIGINT (Ctrl+C): Just display a message and continue
-trap 'echo " Y U no love me?!"' SIGINT
+# Handle SIGQUIT
+sigquit_cleanup() {
+    rm -f "$PID_FILE"
+    exit 0
+}
 
-#  2. SIGTERM (pkill): Display a message, then call cleanup
-trap 'echo " I hate the kill command"; cleanup' SIGTERM
+trap sigterm_message SIGTERM
+trap sigquit_cleanup SIGQUIT
 
-#  3. SIGQUIT: Just call cleanup
-trap 'cleanup' SIGQUIT
-
-#  --- Main Script Starts Here ---
-
-#  1. Create the PID file and write our own PID ($$) into it.
-#     This needs 'sudo' to work.
-echo "$$" > "$PID_FILE"
-
-#  2. Start the infinite loop
-while true
-do
-  echo "To infinity and beyond"
-  sleep 2
+# Infinite loop
+while true; do
+    echo "To infinity and beyond"
+    sleep 1
 done
